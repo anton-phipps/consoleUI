@@ -32,14 +32,6 @@ func convert256(r, g, b int) int {
 	return 16 + (min(5, int(r/51)) * 36) + (min(5, int(g/51)) * 6) + min(5, int(b/51))
 }
 
-func convert32bitTo256(r, g, b int) int {
-	red := uint8((uint(r) >> 16) & 0xFF)
-	green := uint8((uint(g) >> 8) & 0xFF)
-	blue := uint8(uint(b) & 0xFF)
-
-	return int(16 + (red * 36 / 255) + (green * 6 / 255) + (blue / 255))
-}
-
 func displayImage(img image.Image) {
 	xMin, yMin := img.Bounds().Min.X, img.Bounds().Min.Y
 	xMax, yMax := img.Bounds().Max.X-1, img.Bounds().Max.Y-1
