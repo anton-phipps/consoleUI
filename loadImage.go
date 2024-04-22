@@ -60,7 +60,10 @@ func displayImage(img image.Image, xDim, yDim int) {
 			log.Fatal("Could not get Console Size.", err.Error())
 			os.Exit(1)
 		}
-		if xDim == 0 && yDim == 0 {
+		if xMax-xMin <= cols || yMax-yMin <= rows {
+			xDim = 2
+			yDim = 2
+		} else if xDim == 0 && yDim == 0 {
 			if int(float32(yMax-yMin)/float32(rows)) < int(float32(xMax-xMin)/float32(cols)) {
 				xDim = int(float32(yMax-yMin)/float32(rows)) + 1
 				yDim = int(float32(yMax-yMin)/float32(rows)) + 1
