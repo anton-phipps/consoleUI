@@ -54,6 +54,30 @@ func scale32Bit(val int) int {
 func displayImage(img image.Image, xDim, yDim int) {
 	xMin, yMin := img.Bounds().Min.X, img.Bounds().Min.Y
 	xMax, yMax := img.Bounds().Max.X-1, img.Bounds().Max.Y-1
+	if xDim == 0 || yDim == 0 {
+		rows, cols, err := getConsoleSize()
+		if err != nil {
+			log.Fatal("Could not get Console Size.", err.Error())
+			os.Exit(1)
+		}
+		if xDim == 0 && yDim == 0 {
+			if int(float32(yMax-yMin)/float32(rows)) < int(float32(xMax-xMin)/float32(cols)) {
+				xDim = int(float32(yMax-yMin)/float32(rows)) + 1
+				yDim = int(float32(yMax-yMin)/float32(rows)) + 1
+			} else {
+				xDim = int(float32(xMax-xMin)/float32(cols)) + 1
+				yDim = int(float32(xMax-xMin)/float32(cols)) + 1
+			}
+		} else {
+			if xDim == 0 {
+				xDim = int(float32(yMax-yMin)/float32(rows)) + 1
+			}
+			if yDim == 0 {
+				yDim = int(float32(xMax-xMin)/float32(cols)) + 1
+			}
+		}
+	}
+	fmt.Println("xDim:", xDim, "yDim", yDim)
 	for r := range int((yMax - yMin) / (yDim * 2)) {
 		for c := range int((xMax - xMin) / xDim) {
 			sectionA := image.NewRGBA(image.Rect(0, 0, xDim, yDim))

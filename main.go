@@ -8,7 +8,7 @@ import (
 
 func main() {
 	argc := os.Args
-	var xDim, yDim int = 4, 4
+	var xDim, yDim int
 	if len(argc) < 2 {
 		fmt.Println("You must have the name of the file as an argument.")
 		os.Exit(1)
@@ -29,27 +29,19 @@ func main() {
 		switch argc[2] {
 		case "-dim":
 			if x, err := strconv.Atoi(argc[3]); err != nil {
-				xDim = 4
 				fmt.Println("Invalid X Dimension.")
 			} else {
 				xDim = x
 			}
 			if y, err := strconv.Atoi(argc[4]); err != nil {
-				yDim = 4
 				fmt.Println("Invalid Y Dimension.")
 			} else {
 				yDim = y
 			}
 		default:
-			xDim = 4
-			yDim = 4
+			xDim = 0
+			yDim = 0
 		}
 	}
-	rows, cols, err := getConsoleSize()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	fmt.Println("Rows:", rows, "Columns:", cols)
 	loadPng(fileName, xDim, yDim)
 }
