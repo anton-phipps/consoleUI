@@ -60,11 +60,11 @@ func displayImage(img image.Image, xDim, yDim int) {
 			log.Fatal("Could not get Console Size.", err.Error())
 			os.Exit(1)
 		}
-		if xMax-xMin <= cols || yMax-yMin <= rows {
-			xDim = 2
-			yDim = 2
-		} else if xDim == 0 && yDim == 0 {
-			if int(float32(yMax-yMin)/float32(rows)) < int(float32(xMax-xMin)/float32(cols)) {
+		if xDim == 0 && yDim == 0 {
+			if xMax-xMin <= cols || yMax-yMin <= rows {
+				xDim = 2
+				yDim = 2
+			} else if int(float32(yMax-yMin)/float32(rows)) < int(float32(xMax-xMin)/float32(cols)) {
 				xDim = int(float32(yMax-yMin)/float32(rows)) + 1
 				yDim = int(float32(yMax-yMin)/float32(rows)) + 1
 			} else {
@@ -73,14 +73,13 @@ func displayImage(img image.Image, xDim, yDim int) {
 			}
 		} else {
 			if xDim == 0 {
-				xDim = int(float32(yMax-yMin)/float32(rows)) + 1
+				xDim = yDim
 			}
 			if yDim == 0 {
-				yDim = int(float32(xMax-xMin)/float32(cols)) + 1
+				yDim = xDim
 			}
 		}
 	}
-	fmt.Println("xDim:", xDim, "yDim", yDim)
 	for r := range int((yMax - yMin) / (yDim * 2)) {
 		for c := range int((xMax - xMin) / xDim) {
 			sectionA := image.NewRGBA(image.Rect(0, 0, xDim, yDim))

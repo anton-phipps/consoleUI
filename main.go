@@ -14,7 +14,6 @@ func main() {
 		os.Exit(1)
 	}
 	fileName := argc[1]
-	fmt.Println(fileName)
 	if fileName[len(fileName)-4:] != ".png" {
 		fmt.Println("The file must be an '.png'.")
 		os.Exit(1)
