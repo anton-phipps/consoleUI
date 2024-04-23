@@ -64,7 +64,7 @@ func displayImage(img image.Image, xDim, yDim int) {
 			if xMax-xMin <= cols && yMax-yMin <= rows*2 {
 				xDim = 1
 				yDim = 1
-			} else if int(float32(yMax-yMin)/float32(rows*2)) < int(float32(xMax-xMin)/float32(cols)) {
+			} else if int(float32(yMax-yMin)/float32(rows*2)) > int(float32(xMax-xMin)/float32(cols)) {
 				xDim = int(float32(yMax-yMin)/float32(rows*2)) + 1
 				yDim = int(float32(yMax-yMin)/float32(rows*2)) + 1
 			} else {
