@@ -1,5 +1,5 @@
-//go:build winodws
-// +build winodws
+//go:build windows
+// +build windows
 
 package main
 
