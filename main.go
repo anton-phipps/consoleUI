@@ -8,7 +8,6 @@ import (
 
 func main() {
 	argc := os.Args
-	fmt.Printf("%sH%sJ", ESC, ESC)
 	var xDim, yDim int
 	if len(argc) < 2 {
 		fmt.Println("You must have the name of the file as an argument.")

@@ -3,12 +3,8 @@
 
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
 func init() {
-	fmt.Println("Unix Version")
-	time.Sleep(time.Second * 5)
+	fmt.Printf("%sH%sJ", ESC, ESC)
 }
