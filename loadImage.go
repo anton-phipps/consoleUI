@@ -26,7 +26,8 @@ func loadPng(fileName string, xDim, yDim int) {
 }
 
 func displayCell(background, foreground int) {
-	fmt.Printf("%s48;5;%dm%s38;5;%dm%c%s0m", ESC, background, ESC, foreground, '\u2584', ESC)
+	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", ESC, background, ESC, foreground, '\u2584')
+	fmt.Printf("%s0m", ESC)
 }
 
 func convert256(r, g, b int) int {
