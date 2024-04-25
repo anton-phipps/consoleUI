@@ -1,14 +1,16 @@
 //go:build winodws
 // +build winodws
 
-package consoleUI
+package main
 
 import (
+	"fmt"
 	"os"
 	"syscall"
 )
 
 func init() {
+	fmt.Println("Windows Version")
 	stdout := syscall.Handle(os.Stdout.Fd())
 	var originalMode uint32
 	syscall.GetConsoleMode(stdout, &originalMode)
