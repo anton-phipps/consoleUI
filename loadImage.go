@@ -9,8 +9,6 @@ import (
 	"os"
 )
 
-const ESC = "\u001b["
-
 func loadPng(fileName string, xDim, yDim int) {
 	file, err := os.Open(fileName)
 	if err != nil {
