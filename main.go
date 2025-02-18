@@ -42,5 +42,7 @@ func main() {
 			yDim = 0
 		}
 	}
+	fmt.Println("Loading image, press any key to continue...")
+	getChar()
 	loadPng(fileName, xDim, yDim)
 }
