@@ -24,8 +24,8 @@ func loadPng(fileName string, xDim, yDim int) {
 }
 
 func displayCell(background, foreground int) {
-	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", ESC, background, ESC, foreground, '\u2584')
-	fmt.Printf("%s0m", ESC)
+	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", ESC, background, ESC, foreground, LOWERBLOCK)
+	fmt.Printf("%s", RESETFORMAT)
 }
 
 func convert256(r, g, b int) int {
@@ -79,7 +79,9 @@ func displayImage(img image.Image, xDim, yDim int) {
 			}
 		}
 	}
+	// Loop through for rows
 	for r := range int((yMax - yMin) / (yDim * 2)) {
+		// Loop through for columns
 		for c := range int((xMax - xMin) / xDim) {
 			sectionA := image.NewRGBA(image.Rect(0, 0, xDim, yDim))
 			sectionB := image.NewRGBA(image.Rect(0, 0, xDim, yDim))
