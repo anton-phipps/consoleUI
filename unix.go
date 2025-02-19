@@ -23,8 +23,6 @@ import "C"
 import "fmt"
 
 func init() {
-	fmt.Println("Loading image, press any key to continue...")
-	getChar()
 	fmt.Printf("%sH%sJ", ESC, ESC)
 }
 
