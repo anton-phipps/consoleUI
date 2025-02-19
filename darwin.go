@@ -3,25 +3,10 @@
 
 package main
 
-/*
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
-char getChar()
-{
-	struct termios oldt, newt;
-	char ch;
-	tcgetattr(STDIN_FILENO, &oldt);
-	newt = oldt;
-	newt.c_lflag&= ~(ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-	ch = getchar();
-	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-}
-*/
-import "C"
 import (
 	"fmt"
+	"os"
+	"os/exec"
 )
 
 func init() {
@@ -29,5 +14,10 @@ func init() {
 }
 
 func getChar() byte {
-	return byte(C.getChar())
+	exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1").Run()
+	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
+	var b []byte = make([]byte, 1)
+	os.Stdin.Read(b)
+	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
+	return b[0]
 }
