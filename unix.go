@@ -22,6 +22,8 @@ char getChar()
 import "C"
 import (
 	"fmt"
+	"os"
+	"os/exec"
 )
 
 func init() {
@@ -30,4 +32,16 @@ func init() {
 
 func getChar() byte {
 	return byte(C.getChar())
+}
+
+func getConsoleSize() (rows, cols int, err error) {
+	cmd := exec.Command("stty", "size")
+	cmd.Stdin = os.Stdin
+	out, err := cmd.Output()
+
+	if err != nil {
+		return 0, 0, err
+	}
+	fmt.Sscanf(string(out), "%d %d", &rows, &cols)
+	return rows, cols, nil
 }

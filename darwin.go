@@ -21,3 +21,15 @@ func getChar() byte {
 	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
 	return b[0]
 }
+
+func getConsoleSize() (rows, cols int, err error) {
+	cmd := exec.Command("stty", "size")
+	cmd.Stdin = os.Stdin
+	out, err := cmd.Output()
+
+	if err != nil {
+		return 0, 0, err
+	}
+	fmt.Sscanf(string(out), "%d %d", &rows, &cols)
+	return rows, cols, nil
+}
