@@ -8,8 +8,8 @@ import (
 	"log"
 	"os"
 
-	"japanton.com/consoleUI/internal/constants"
 	"japanton.com/consoleUI/internal/osSpecific"
+	"japanton.com/consoleUI/internal/screen"
 )
 
 func LoadPng(fileName string, xDim, yDim int) {
@@ -24,11 +24,6 @@ func LoadPng(fileName string, xDim, yDim int) {
 		os.Exit(1)
 	}
 	displayImage(img, xDim, yDim)
-}
-
-func displayCell(background, foreground int) {
-	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", constants.ESC, background, constants.ESC, foreground, constants.LOWERBLOCK)
-	fmt.Printf("%s", constants.RESETFORMAT)
 }
 
 func convert256(r, g, b int) int {
@@ -92,7 +87,7 @@ func displayImage(img image.Image, xDim, yDim int) {
 			draw.Draw(sectionB, sectionB.Bounds(), img, image.Point{xMin + c*xDim, yMin + r*2*yDim + yDim}, draw.Src)
 			rA, gA, bA := getRepresentation(sectionA)
 			rB, gB, bB := getRepresentation(sectionB)
-			displayCell(convert256(scale32Bit(rA), scale32Bit(gA), scale32Bit(bA)), convert256(scale32Bit(rB), scale32Bit(gB), scale32Bit(bB)))
+			screen.DisplayCell(convert256(scale32Bit(rA), scale32Bit(gA), scale32Bit(bA)), convert256(scale32Bit(rB), scale32Bit(gB), scale32Bit(bB)))
 		}
 		fmt.Println()
 	}

@@ -54,7 +54,7 @@ func main() {
 	fmt.Println("...")
 
 	images.LoadPng(fileName, xDim, yDim)
-	element := uiElements.NewMenu(0, 0, []string{"Anton", "Burnell", "Phipps"})
+	element := uiElements.NewMenu(0, 0, 100, 100, []string{"Anton", "Burnell", "Phipps"})
 	for {
 		fmt.Println("Enter a character...")
 		ch := osSpecific.GetChar()
