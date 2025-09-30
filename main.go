@@ -4,8 +4,13 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"japanton.com/consoleUI/internal/osSpecific"
 )
 
+func init() {
+	fmt.Printf("%sH%sJ", ESC, ESC)
+}
 func main() {
 	argc := os.Args
 	var xDim, yDim int
@@ -43,6 +48,7 @@ func main() {
 		}
 	}
 	fmt.Println("Loading image, press any key to continue...")
-	getChar()
+
+	osSpecific.GetChar()
 	loadPng(fileName, xDim, yDim)
 }

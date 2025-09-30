@@ -1,12 +1,12 @@
 //go:build windows
 // +build windows
 
-package main
+package osSpecific
 
 /*
 #include <conio.h>
 
-char getChar()
+char GetChar()
 {
 	return getch();
 }
@@ -26,14 +26,13 @@ func init() {
 	syscall.GetConsoleMode(stdout, &originalMode)
 	originalMode |= 0x0004
 	syscall.MustLoadDLL("kernel32").MustFindProc("SetConsoleMode").Call(uintptr(stdout), uintptr(originalMode))
-	fmt.Printf("%sH%sJ", ESC, ESC)
 }
 
-func getChar() byte {
-	return byte(C.getChar())
+func GetChar() byte {
+	return byte(C.GetChar())
 }
 
-func getConsoleSize() (rows, cols int, err error) {
+func GetConsoleSize() (rows, cols int, err error) {
 	cmd := exec.Command("mode", "con", "/status")
 	out, err := cmd.Output()
 	if err != nil {

@@ -1,13 +1,13 @@
 //go:build !windows && !darwin
 // +build !windows,!darwin
 
-package main
+package osSpecific
 
 /*
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
-char getChar()
+char GetChar()
 {
 	struct termios oldt, newt;
 	char ch;
@@ -17,6 +17,7 @@ char getChar()
 	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 	ch = getchar();
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+	return ch;
 }
 */
 import "C"
@@ -26,15 +27,11 @@ import (
 	"os/exec"
 )
 
-func init() {
-	fmt.Printf("%sH%sJ", ESC, ESC)
+func GetChar() byte {
+	return byte(C.GetChar())
 }
 
-func getChar() byte {
-	return byte(C.getChar())
-}
-
-func getConsoleSize() (rows, cols int, err error) {
+func GetConsoleSize() (rows, cols int, err error) {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
 	out, err := cmd.Output()

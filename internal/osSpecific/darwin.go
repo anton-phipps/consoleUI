@@ -1,7 +1,7 @@
 //go:build darwin
 // +build darwin
 
-package main
+package osSpecific
 
 import (
 	"fmt"
@@ -9,11 +9,7 @@ import (
 	"os/exec"
 )
 
-func init() {
-	fmt.Printf("%sH%sJ", ESC, ESC)
-}
-
-func getChar() byte {
+func GetChar() byte {
 	exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1").Run()
 	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
 	var b []byte = make([]byte, 1)
@@ -22,7 +18,7 @@ func getChar() byte {
 	return b[0]
 }
 
-func getConsoleSize() (rows, cols int, err error) {
+func GetConsoleSize() (rows, cols int, err error) {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
 	out, err := cmd.Output()

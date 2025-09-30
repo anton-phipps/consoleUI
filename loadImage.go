@@ -7,6 +7,8 @@ import (
 	"image/png"
 	"log"
 	"os"
+
+	"japanton.com/consoleUI/internal/osSpecific"
 )
 
 func loadPng(fileName string, xDim, yDim int) {
@@ -54,7 +56,7 @@ func displayImage(img image.Image, xDim, yDim int) {
 	xMin, yMin := img.Bounds().Min.X, img.Bounds().Min.Y
 	xMax, yMax := img.Bounds().Max.X-1, img.Bounds().Max.Y-1
 	if xDim == 0 || yDim == 0 {
-		rows, cols, err := getConsoleSize()
+		rows, cols, err := osSpecific.GetConsoleSize()
 		if err != nil {
 			log.Fatal("Could not get Console Size.", err.Error())
 			os.Exit(1)
