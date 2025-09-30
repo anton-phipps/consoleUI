@@ -3,6 +3,27 @@
 
 package osSpecific
 
+// To get the current version of getch() to work when compiling on macOS, I had to run the following command:
+//  sudo mv /usr/local/include/signal.h /usr/local/include/signal.h.bak
+
+/*
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+
+int getch() {
+    struct termios oldt, newt;
+    int ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
+*/
+import "C"
 import (
 	"fmt"
 	"os"
@@ -10,12 +31,8 @@ import (
 )
 
 func GetChar() byte {
-	exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1").Run()
-	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
-	var b []byte = make([]byte, 1)
-	os.Stdin.Read(b)
-	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
-	return b[0]
+	return byte(C.getch())
+
 }
 
 func GetConsoleSize() (rows, cols int, err error) {

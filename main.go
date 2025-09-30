@@ -2,20 +2,24 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
+	"japanton.com/consoleUI/internal/constants"
+	"japanton.com/consoleUI/internal/images"
 	"japanton.com/consoleUI/internal/osSpecific"
+	"japanton.com/consoleUI/internal/uiElements"
 )
 
 func init() {
-	fmt.Printf("%sH%sJ", ESC, ESC)
+	fmt.Printf("%sH%sJ", constants.ESC, constants.ESC)
 }
 func main() {
 	argc := os.Args
 	var xDim, yDim int
 	if len(argc) < 2 {
-		fmt.Println("You must have the name of the file as an argument.")
+		fmt.Println("You must have the name of the image file as an argument.")
 		os.Exit(1)
 	}
 	fileName := argc[1]
@@ -25,8 +29,7 @@ func main() {
 	}
 
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
-		fmt.Println("File does not exist")
-		os.Exit(1)
+		log.Fatal("file does not exist")
 	}
 
 	if len(argc) >= 5 {
@@ -48,7 +51,31 @@ func main() {
 		}
 	}
 	fmt.Println("Loading image, press any key to continue...")
+	fmt.Println("...")
 
-	osSpecific.GetChar()
-	loadPng(fileName, xDim, yDim)
+	images.LoadPng(fileName, xDim, yDim)
+	element := uiElements.NewMenu(0, 0, []string{"Anton", "Burnell", "Phipps"})
+	for {
+		fmt.Println("Enter a character...")
+		ch := osSpecific.GetChar()
+		if ch == 'q' {
+			break
+		}
+		switch ch {
+		case constants.UPARROW:
+			if element.Current <= 0 {
+				element.Current = 0
+			} else {
+				element.Current--
+			}
+		case constants.DOWNARROW:
+			if element.Current >= len(element.Items) {
+				element.Current = len(element.Items)
+			} else {
+				element.Current++
+			}
+		}
+		fmt.Printf("%+v\n", element)
+		fmt.Printf("value of key: %d\n", ch)
+	}
 }

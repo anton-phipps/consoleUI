@@ -1,4 +1,4 @@
-package main
+package images
 
 import (
 	"fmt"
@@ -8,10 +8,11 @@ import (
 	"log"
 	"os"
 
+	"japanton.com/consoleUI/internal/constants"
 	"japanton.com/consoleUI/internal/osSpecific"
 )
 
-func loadPng(fileName string, xDim, yDim int) {
+func LoadPng(fileName string, xDim, yDim int) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -26,8 +27,8 @@ func loadPng(fileName string, xDim, yDim int) {
 }
 
 func displayCell(background, foreground int) {
-	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", ESC, background, ESC, foreground, LOWERBLOCK)
-	fmt.Printf("%s", RESETFORMAT)
+	fmt.Printf("%s48;5;%dm%s38;5;%dm%c", constants.ESC, background, constants.ESC, foreground, constants.LOWERBLOCK)
+	fmt.Printf("%s", constants.RESETFORMAT)
 }
 
 func convert256(r, g, b int) int {
