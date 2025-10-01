@@ -14,7 +14,8 @@ func ReadKey() (string, error) {
 	}
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
-	buf := make([]byte, 3) // big enough for escape sequences
+	// big enough for escape sequences
+	buf := make([]byte, 3)
 	n, err := os.Stdin.Read(buf)
 	if err != nil {
 		return "", err
