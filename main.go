@@ -57,7 +57,10 @@ func main() {
 	element := uiElements.NewMenu(0, 0, 100, 100, []string{"Anton", "Burnell", "Phipps"})
 	for {
 		fmt.Println("Enter a character...")
-		ch := osSpecific.GetChar()
+		ch, err := osSpecific.GetChar()
+		if err != nil {
+			log.Fatal(err)
+		}
 		if ch == 'q' {
 			break
 		}
