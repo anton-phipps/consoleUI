@@ -8,7 +8,7 @@ import (
 
 	"japanton.com/consoleUI/internal/constants"
 	"japanton.com/consoleUI/internal/images"
-	"japanton.com/consoleUI/internal/osSpecific"
+	"japanton.com/consoleUI/internal/interactions"
 	"japanton.com/consoleUI/internal/uiElements"
 )
 
@@ -55,9 +55,16 @@ func main() {
 
 	images.LoadPng(fileName, xDim, yDim)
 	element := uiElements.NewMenu(0, 0, 100, 100, []string{"Anton", "Burnell", "Phipps"})
+	fmt.Printf("Enter a key...\n")
+	k, err := interactions.ReadKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Key was read. %s\n", k)
 	for {
 		fmt.Println("Enter a character...")
-		ch, err := osSpecific.GetChar()
+		str, err := interactions.ReadKey()
+		ch := byte(str[0])
 		if err != nil {
 			log.Fatal(err)
 		}

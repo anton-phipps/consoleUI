@@ -4,44 +4,34 @@
 package osSpecific
 
 import (
-	"syscall"
-	"unsafe"
-
-	"golang.org/x/sys/windows"
+	"fmt"
+	"os/exec"
+	"strings"
 )
 
-var (
-	kernel32           = windows.NewLazySystemDLL("kernel32.dll")
-	procGetConsoleMode = kernel32.NewProc("GetConsoleMode")
-	procSetConsoleMode = kernel32.NewProc("SetConsoleMode")
-	procReadConsole    = kernel32.NewProc("ReadConsoleW")
-)
-
-// GetChar reads a single character from stdin without waiting for Enter.
-func GetChar() (byte, error) {
-	hIn := windows.Handle(syscall.Stdin)
-
-	// Save old mode
-	var oldMode uint32
-	procGetConsoleMode.Call(uintptr(hIn), uintptr(unsafe.Pointer(&oldMode)))
-
-	// Disable line buffering and echo
-	procSetConsoleMode.Call(uintptr(hIn), uintptr(0))
-
-	defer procSetConsoleMode.Call(uintptr(hIn), uintptr(oldMode))
-
-	// Read one wide char
-	var buf [1]uint16
-	var read uint32
-	ret, _, err := procReadConsole.Call(
-		uintptr(hIn),
-		uintptr(unsafe.Pointer(&buf[0])),
-		1,
-		uintptr(unsafe.Pointer(&read)),
-		0,
-	)
-	if ret == 0 {
-		return 0, err
+func getConsoleSize() (rows, cols int, err error) {
+	cmd := exec.Command("mode", "con", "/status")
+	out, err := cmd.Output()
+	if err != nil {
+		return 0, 0, err
 	}
-	return byte(buf[0]), nil
+
+	lines := strings.Split(string(out), "\n")
+	for _, line := range lines {
+		if strings.Contains(line, "Columns") {
+			parts := strings.Fields(line)
+			if len(parts) >= 2 {
+				colsStr := parts[1]
+				fmt.Sscanf(colsStr, "%d", &cols)
+			}
+		} else if strings.Contains(line, "Lines") {
+			parts := strings.Fields(line)
+			if len(parts) >= 2 {
+				rowsStr := parts[1]
+				fmt.Sscanf(rowsStr, "%d", &rows)
+			}
+		}
+	}
+
+	return rows, cols, nil
 }
