@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func getConsoleSize() (rows, cols int, err error) {
+func GetConsoleSize() (rows, cols int, err error) {
 	cmd := exec.Command("mode", "con", "/status")
 	out, err := cmd.Output()
 	if err != nil {

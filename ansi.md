@@ -1,17 +1,5 @@
 # ANSI escape sequences
 
-[ANSI escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code) can be printed to a shell to as instructions.
-The below is a list of codes I have used often in my CLI programs and I find myself looking up over and over again.
-
-A great article about it can be found [here](https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html).
-
-## Content
-
-- [Colors](#colors)
-- [Styles](#styles)
-- [Cursor](#cursor)
-- [Screen](#screen)
-
 ## Prefix
 
 The standard prefix is `ESC` which can be expressed as:
