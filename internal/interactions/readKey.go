@@ -1,3 +1,6 @@
+/*
+* This is to accept keypresses and other user interactions
+ */
 package interactions
 
 import (
@@ -29,19 +32,8 @@ func ReadKey() (string, error) {
 		return "Enter", nil
 	case n == 1 && buf[0] == 27: // ESC
 		return "Esc", nil
-	case n == 3 && buf[0] == 27 && buf[1] == 91:
-		switch buf[2] {
-		case 65:
-			return "Up", nil
-		case 66:
-			return "Down", nil
-		case 67:
-			return "Right", nil
-		case 68:
-			return "Left", nil
-		}
 	}
 
 	// Default: return the raw character
-	return string(buf[:n]), nil
+	return string(buf[n-1]), nil
 }

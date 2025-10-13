@@ -15,6 +15,7 @@ import (
 func init() {
 	fmt.Printf("%sH%sJ", constants.ESC, constants.ESC)
 }
+
 func main() {
 	argc := os.Args
 	var xDim, yDim int
@@ -71,7 +72,7 @@ func main() {
 		if ch == 'q' {
 			break
 		}
-		switch ch {
+		switch int(ch) {
 		case constants.UPARROW:
 			if element.Current <= 0 {
 				element.Current = 0
