@@ -87,6 +87,5 @@ func main() {
 			}
 		}
 		fmt.Printf("%+v\n", element)
-		fmt.Printf("value of key: %d\n", ch)
 	}
 }

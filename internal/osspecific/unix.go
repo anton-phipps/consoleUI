@@ -1,7 +1,7 @@
 //go:build darwin || linux || freebsd
 // +build darwin linux freebsd
 
-package osSpecific
+package osspecific
 
 import (
 	"fmt"

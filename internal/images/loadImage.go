@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"japanton.com/consoleUI/internal/osSpecific"
+	"japanton.com/consoleUI/internal/osspecific"
 	"japanton.com/consoleUI/internal/screen"
 )
 
@@ -52,7 +52,7 @@ func displayImage(img image.Image, xDim, yDim int) {
 	xMin, yMin := img.Bounds().Min.X, img.Bounds().Min.Y
 	xMax, yMax := img.Bounds().Max.X-1, img.Bounds().Max.Y-1
 	if xDim == 0 || yDim == 0 {
-		rows, cols, err := osSpecific.GetConsoleSize()
+		rows, cols, err := osspecific.GetConsoleSize()
 		if err != nil {
 			log.Fatal("Could not get Console Size.", err.Error())
 			os.Exit(1)
